@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoveObject : MonoBehaviour
 {
@@ -29,17 +30,26 @@ public class MoveObject : MonoBehaviour
     /// </summary>
     public float Blink_Rate = 5f;
 
+    public Text winText;
+    private bool textflag = false;
+    private float wtime = 0;
+
+    void Start() {
+          winText.text = "";
+    }
+
     void Update()
     {
         // 当鼠标按下时选取
         if (Input.GetMouseButtonDown(0))
         {
-            // 当有物体被选中时
+            // 当已经有物体被选中时
             if (flag)
             {
                 if (m_obSelected)
                 {
-                    m_obSelected.GetComponent<Renderer>().material.SetFloat("_RimPower", 0);   
+                    m_obSelected.GetComponent<Renderer>().material.SetFloat("_RimPower", 0);
+                      
                 }
                 m_obSelected = null;
                 flag = false;
@@ -67,25 +77,38 @@ public class MoveObject : MonoBehaviour
         if (m_obSelected)
         {
             Blink(Blink_Rate);
+
             Vector3 v3CurMousePos = Input.mousePosition;
             //拖拽
-            if (v3CurMousePos != m_v3OldMousePos)
+            //if (v3CurMousePos != m_v3OldMousePos)
+            if (true)
             {
                 Ray ray = Camera.main.ScreenPointToRay(v3CurMousePos);
                 //选取标记为Ref的游戏物体（地面，墙体）
                 if (Physics.Raycast(ray, out m_rayhit, m_fDistance, LayerMask.GetMask("Ref")))
                 {
                     SetColor(new Color(0, 1, 0, 1));
+                    GameObject.Find("Grass").GetComponent<Renderer>().material.SetFloat("_RimPower", 0); 
                     MoveOrnament();
+
+                    textflag = true;
+                    wtime = wtime + Time.deltaTime;
                 }
                 else
                 {
                     SetColor(new Color(1, 0, 0, 1));
+                    noteBlink();
+                    textflag = false;
                 }
             }
             m_v3OldMousePos = v3CurMousePos;
         }
+        if (Input.GetMouseButtonDown(0) && wtime >= 1 && textflag)
+        {
+            winText.text = "You Win!";
+        }
     }
+
     /// <summary>
     /// 移动选中的摆件
     /// </summary>
@@ -107,6 +130,12 @@ public class MoveObject : MonoBehaviour
 		render.material.SetFloat("_RimPower", 5*Mathf.Cos(Time.time * rate) + 6);
     }
 
+    private void noteBlink()
+    {
+        Renderer noteblink =  GameObject.Find("Grass").GetComponent<Renderer>();
+        noteblink.material.SetFloat("_RimPower", 5*Mathf.Cos(Time.time * 5) + 3);
+        
+    }
     private void SetColor(Color col)
     {
         Renderer render = m_obSelected.GetComponent<Renderer>();

@@ -6,14 +6,14 @@ public class CameraControl : MonoBehaviour {
     public GameObject mainCamera;//获取摄像机
     public GameObject terrain;//获取地图
     public float rollAngle=45;//摄像机倾斜角度
-    public float height=40f;//摄像机和地图的高度差
+    public float height=12f;//摄像机和地图的高度差
     public float moveSpeed = 1.5f;//摄像机移动速度系数
     public float maxRangeX;//摄像机x坐标变化范围
     public float minRangeX;
     public float maxRangeZ;//摄像机z坐标变化范围
     public float minRangeZ;
-    public float maxRangeY = 75f;//缩放最大高度
-    public float minRangeY = 30f;//缩放最小高度
+    public float maxRangeY = 15f;//缩放最大高度
+    public float minRangeY = 10f;//缩放最小高度
     public float zoomSpeed = 3f;//缩放速度系数
     public float rotateAngle = 0;
     public float rotateSpeed = 40f;//旋转速度系数
