@@ -19,7 +19,7 @@ public class ClickObject : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// 拾起标志
     /// </summary>
-    private bool flag;
+    private bool PickUpFlag;
     /// <summary>
     /// 计算得分
     /// </summary>
@@ -32,28 +32,15 @@ public class ClickObject : MonoBehaviour, IPointerClickHandler
     /// 距离目标区域中心点的评分范围，要求是5的倍数
     /// </summary>
     public int limits = 25;
-    public Button button1;
-    public Button button2;
 
     // Use this for initialization
     private void Awake()
     {
-        flag = false;
+        PickUpFlag = false;
     }
 
     private void Start()
     {
-        button1.onClick.AddListener(delegate ()
-        {
-            rotationleft();
-        }
-        );
-        button2.onClick.AddListener(delegate ()
-        {
-            rotationright();
-        }
-        );
-
         if (MoveObjectEvent == null)
         {
             MoveObjectEvent = new MoveObjectEvent();
@@ -68,7 +55,7 @@ public class ClickObject : MonoBehaviour, IPointerClickHandler
     void Update()
     {
         // 如果被拾起，执行移动操作，并闪烁，否则不闪烁
-        if (flag)
+        if (PickUpFlag)
         {
             MoveObjectEvent.Invoke();
             BlinkEvent.Invoke(5);
@@ -96,14 +83,14 @@ public class ClickObject : MonoBehaviour, IPointerClickHandler
     /// </summary>
     private void SetMoveFlagAndScoring()
     {
-        if (!flag)
+        if (!PickUpFlag)
         {
-            flag = true;
+            PickUpFlag = true;
         }
         else
         {
             Score = 0;
-            flag = false;
+            PickUpFlag = false;
             // 放置后查找与本物体相同标签的 GameObject ，获取其坐标后与本物体计算距离，得到分数。
             Score += PositionScoring(AimRange.transform.position);
             //Debug.Log(Score);
@@ -171,17 +158,5 @@ public class ClickObject : MonoBehaviour, IPointerClickHandler
     private void OnTriggerExit(Collider other)
     {
         Debug.LogFormat("离开了{0}", other.name);
-    }
-
-    private void rotationleft()
-    {
-        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
-        gameObject.transform.Rotate(localup, 10f);
-    }
-
-    private void rotationright()
-    {
-        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
-        gameObject.transform.Rotate(localup, -10f);
     }
 }

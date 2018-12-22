@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grass
   - Pagoda
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Animal
   - 
   - 
   - 

@@ -10,7 +10,8 @@ public class ChangeObject : MonoBehaviour
 {
     private static GameObject hitcamera;
 
-    private void Start() {
+    private void Start()
+    {
         hitcamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
@@ -64,5 +65,17 @@ public class ChangeObject : MonoBehaviour
         {
             render.material.SetFloat("_RimPower", 5 * Mathf.Cos(Time.time * rate) + 6);
         }
+    }
+
+    public void rotationleft()
+    {
+        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
+        gameObject.transform.Rotate(localup, 10f);
+    }
+
+    public void rotationright()
+    {
+        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
+        gameObject.transform.Rotate(localup, -10f);
     }
 }
