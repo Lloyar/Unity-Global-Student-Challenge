@@ -6,39 +6,31 @@ public class CameraControl : MonoBehaviour
 {
     public GameObject mainCamera;//获取摄像机
     public GameObject cameraStartPos; // 摄像机起始坐标
-    public GameObject terrain;//获取地图
     public float moveSpeed = 0.5f;//摄像机移动速度系数
     public float zoomSpeed = 0.3f;//缩放速度系数
-    public float rotateSpeed = 60f;//旋转速度系数
+    public float rotateSpeed = 70f;//旋转速度系数
     private float maxRangeX;//摄像机x坐标变化范围
     private float minRangeX;
     private float maxRangeZ;//摄像机z坐标变化范围
     private float minRangeZ;
     private float maxRangeY = 30f;//缩放最大高度
     private float minRangeY = 15f;//缩放最小高度
-
     Vector3 cameraPos;//摄像机临时坐标
 
-    private float sizeX;//地图尺寸x
-    private float sizeZ;//地图尺寸z
     void Start()
     {
-        //获取地图尺寸
-        sizeX = terrain.GetComponent<TerrainCollider>().bounds.size.x;
-        sizeZ = terrain.GetComponent<TerrainCollider>().bounds.size.z;
-        maxRangeX = terrain.transform.position.x + 0.75f * sizeX;
-        minRangeX = terrain.transform.position.x + 0.25f * sizeX;
-        maxRangeZ = terrain.transform.position.z + 0.75f * sizeZ;
-        minRangeZ = terrain.transform.position.z + 0.25f * sizeZ;
+        //设置设置摄像机移动范围
+        var pos = cameraStartPos.transform.position;
+        maxRangeX = pos.x + Vector3.Dot(new Vector3(300, 0, 0), Vector3.right);
+        minRangeX = pos.x + Vector3.Dot(new Vector3(300, 0, 0), Vector3.left);
+        maxRangeZ = pos.x + Vector3.Dot(new Vector3(0, 0, 300), Vector3.forward);
+        minRangeZ = pos.x + Vector3.Dot(new Vector3(0, 0, 300), Vector3.back);
 
-        cameraPos = cameraStartPos.transform.position + new Vector3(0, 20, -10);
         //设置摄像机位置
+        cameraPos = cameraStartPos.transform.position + new Vector3(0, 20, -10);
         mainCamera.transform.position = cameraPos;
         mainCamera.transform.eulerAngles = new Vector3(25, 0, 0);
-
         //mainCamera.transform.forward = new Vector3(0, 0, 1);
-        Debug.Log(mainCamera.transform.position);
-        Debug.Log("地图尺寸为：" + sizeX + "X" + sizeZ);
     }
     void Update()
     {
@@ -81,35 +73,6 @@ public class CameraControl : MonoBehaviour
         }
     }
 
-    // void ZoomCamera()
-    // {
-    //     if (Input.GetAxis("Mouse ScrollWheel") > 0 && cameraPos.y <= maxRangeY)
-    //     {
-    //         Vector3 moveDirectionY = new Vector3(0, 1, 0);
-    //         cameraPos += moveDirectionY * zoomSpeed;
-    //     }
-    //     if (Input.GetAxis("Mouse ScrollWheel") < 0 && cameraPos.y >= minRangeY)
-    //     {
-    //         Vector3 moveDirectionY = new Vector3(0, -1, 0);
-    //         cameraPos += moveDirectionY * zoomSpeed;
-    //     }
-    // }
-
-    // void ZoomCamera() {
-    //     //滚动鼠标滑轮缩放摄像机
-    //     if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-    //         if (cameraPos.y < minRangeY)
-    //             return;
-    //         Vector3 moveDirectionZ = transform.forward;
-    //         cameraPos += moveDirectionZ * zoomSpeed;
-    //     }
-    //     if (Input.GetAxis("Mouse ScrollWheel") <0) {
-    //         if (cameraPos.y > maxRangeY)
-    //             return;
-    //         Vector3 moveDirectionZ = -transform.forward;
-    //         cameraPos += moveDirectionZ * zoomSpeed;
-    //     }
-    // }
     void RotateCamera()
     {
         //按下鼠标右键旋转摄像机

@@ -6,11 +6,11 @@ using UnityEngine.Events;
 /// <summary>
 /// 更改物体的位置，闪烁状态，闪烁颜色
 /// </summary>
-public class ChangeObject : MonoBehaviour
+public class ChangeObjectStates : MonoBehaviour
 {
     private static GameObject hitcamera;
 
-    private void Start()
+    private void Awake()
     {
         hitcamera = GameObject.FindGameObjectWithTag("MainCamera");
     }

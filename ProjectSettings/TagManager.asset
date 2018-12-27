@@ -4,9 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Grass
-  - Pagoda
-  - Water
+  - Scoring Objects
   layers:
   - Default
   - TransparentFX
