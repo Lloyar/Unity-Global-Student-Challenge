@@ -10,8 +10,7 @@ public class ChangeObjectStates : MonoBehaviour
 {
     private static GameObject hitcamera;
 
-    private void Awake()
-    {
+    private void Start() {
         hitcamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
