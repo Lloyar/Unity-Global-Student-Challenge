@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Scoring Objects
+  - Tools Box
   layers:
   - Default
   - TransparentFX

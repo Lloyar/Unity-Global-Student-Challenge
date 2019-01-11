@@ -29,31 +29,20 @@ public class ObjectsController : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData"></param> 发生此事件所产生的信息
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Debug.Log(eventData.pointerCurrentRaycast.gameObject);
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (!GameController.PickupFlag)
+            if (GameController.SelectedGameob == null)
             {
                 GameController.SelectedGameob = eventData.pointerCurrentRaycast.gameObject;
-                GameController.PickupFlag = true;
             }
             else
             {
                 Score = 0;
                 GameController.SelectedGameob = null;
-                GameController.PickupFlag = false;
                 GetComponent<ChangeObjectStates>().Blink(0); // 停止闪烁
                 Scoring();
             }
         }
-    }
-
-    /// <summary>
-    /// 如果此物体未被拾起则拾起。否则，放置并打分。
-    /// </summary>
-    private void SetMoveFlagAndScoringPos()
-    {
-
     }
 
     private void Scoring()
