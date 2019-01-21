@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Scoring Objects
   - Tools Box
+  - ToolsController
   layers:
   - Default
   - TransparentFX

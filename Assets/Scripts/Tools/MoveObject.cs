@@ -6,7 +6,7 @@ using UnityEngine.Events;
 /// <summary>
 /// 更改物体的位置，闪烁状态，闪烁颜色
 /// </summary>
-public class ChangeObjectStates : MonoBehaviour
+public class MoveObject : MonoBehaviour
 {
     private static GameObject hitcamera;
 
@@ -27,8 +27,6 @@ public class ChangeObjectStates : MonoBehaviour
             {
                 gameObject.transform.position = hitinfo.point;
                 gameObject.transform.up = hitinfo.normal;
-                //Vector3 rota = new Vector3(Vector3.Dot(hitinfo.normal,Vector3.right),Vector3.Dot(hitinfo.normal,Vector3.up),Vector3.Dot(hitinfo.normal,Vector3.forward));
-                //object.transform.rotation;
             }
             SetColor(new Color(0, 1, 0, 1));
         }
@@ -48,33 +46,4 @@ public class ChangeObjectStates : MonoBehaviour
         GetComponent<Renderer>().material.SetColor("_RimColor", col);
     }
 
-    /// <summary>
-    /// 不断改变此物体着色器上的边缘光强度，已达到闪烁的效果
-    /// </summary>
-    /// <param name="rate"></param> 改变的速率
-    public void Blink(float rate)
-    {
-        Renderer render = GetComponent<Renderer>();
-        if (rate == 0)
-        // if (Mathf.Abs(rate) <= Mathf.Epsilon)
-        {
-            render.material.SetFloat("_RimPower", 0);
-        }
-        else
-        {
-            render.material.SetFloat("_RimPower", 5 * Mathf.Cos(Time.time * rate) + 6);
-        }
-    }
-
-    public void rotationleft()
-    {
-        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
-        gameObject.transform.Rotate(localup, 10f);
-    }
-
-    public void rotationright()
-    {
-        var localup = gameObject.transform.worldToLocalMatrix.MultiplyVector(gameObject.transform.up);
-        gameObject.transform.Rotate(localup, -10f);
-    }
 }
